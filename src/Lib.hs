@@ -24,6 +24,7 @@ multiply (Polynomial ys) (Polynomial xs) = foldr
   (Polynomial []) 
   xs
 
+-- Should be: monomialWithPosition :: Polynomial -> Int -> [Point]
 monomialWithPosition :: Polynomial -> Int -> [(Int, Int)]
 monomialWithPosition (Polynomial []) _ = []
 monomialWithPosition (Polynomial (x:xs)) n = (x,n):monomialWithPosition (Polynomial xs) (n-1)
@@ -35,6 +36,7 @@ evaluate :: Polynomial -> Int -> Int
 evaluate (Polynomial []) _ = 0
 evaluate (Polynomial (p:ps)) x = p + x * evaluate (Polynomial ps) x
 
+-- Should be: format :: Point -> [Char]
 format :: (Int, Int) -> [Char]
 format (0, _) = ""
 format (1, 1) = "x"
