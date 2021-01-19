@@ -5,10 +5,10 @@ Currently supports basic operations on Polynomials, from formatting, scaling, ad
 
 ## Running
 
-###
+```shell
 stack install
 stack run
-###
+```
 
 Take the example program: 
 
