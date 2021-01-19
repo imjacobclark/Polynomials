@@ -53,7 +53,6 @@ stringulate = intercalate "" . intersperse " + "
 
 --   x
 
-
 polynomials :: IO ()
 polynomials = do
   let p1 = Polynomial [1,2,3]
@@ -62,7 +61,6 @@ polynomials = do
   print . stringulate . map format . monomialWithPosition p1 $ polynomialLength p1 - 1
   print . stringulate . map format . monomialWithPosition p2 $ polynomialLength p2 - 1
   print . stringulate . map format . monomialWithPosition (multiply p1 p2) $ polynomialLength (multiply p1 p2) - 1
-  print $ multiply p1 p2
 
 -- -- https://github.com/hashanp/haskell-projects/blob/master/Polynomial.hs
 -- -- http://hackage.haskell.org/package/dsp-0.2.1/docs/src/Polynomial-Basic.html
