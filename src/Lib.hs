@@ -35,7 +35,7 @@ evaluate :: Polynomial -> Int -> Int
 evaluate (Polynomial []) _ = 0
 evaluate (Polynomial (p:ps)) x = p + x * evaluate (Polynomial ps) x
 
-format :: (Eq a1, Eq a2, Num a1, Num a2, Show a1, Show a2) => (a1, a2) -> [Char]
+format :: (Int, Int) -> [Char]
 format (0, _) = ""
 format (1, 1) = "x"
 format (coefficient, 1) = show coefficient ++ "x"
