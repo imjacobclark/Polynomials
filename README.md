@@ -1,7 +1,21 @@
 # Polynomials
-Polynomial fun in Haskell.
 
-Currently supports basic operations on Polynomials, from formatting, scaling, addition, multiplication and evaluation. Eventually I plan on building a Shamir's Secret Sharing program ontop of these building blocks.
+A series of functions that operate on Polynomials.
+
+Built from the ground up with the intent to support calculating interpolating polynomials of given points.
+
+
+## Definitions
+
+_Points:_ The location on a cartesian coordinate system (a grid with an x and y axis.) Example (2,2) is a point where the location on the x and y axis respectively is 2. 
+
+_Exponentiation:_ A power, for example, squaring a number means to raise a number by the power 2. exponentiating x to 2 is the same as raising x to the power 2.
+
+_Coefficient:_ A coefficient is a number that is variable or constant that we multiply another number by. For example in the expression `f(x) = 2x`, `2` is the coefficient.
+
+_Polynomial:_ A polynomial is an expression consisting a variables and coefficients, where the expression only uses addition, subtraction, multiplication and non-negative integer exponentiation of variables. For example `x^3 + 2x^2 + x + 1` is a polynomial. Once we have a polynomial, it is then possible to graph it.
+
+_Interpolation:_ **The intersection of something** - In the context of polynomials, to "interpolate" _(verb)_ means to find the unique minimum degree polynomial passing through a set of points. For example, given the set of points `[(1,1)]`, it is clear to see there is a unique polynomial `1` that passes through these points. `[(1,1), (2,0)]` would yeild the unique polynomial of `2.0 + -1.0 * x^1`.
 
 ## Running
 

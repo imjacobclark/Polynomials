@@ -24,10 +24,9 @@ multiply (Polynomial ys) (Polynomial xs) = foldr
   (Polynomial []) 
   xs
 
--- Should be: monomialWithPosition :: Polynomial -> Int -> [Point]
-monomialWithPosition :: Polynomial -> Int -> [(Int, Int)]
+monomialWithPosition :: Polynomial -> Int -> [Point]
 monomialWithPosition (Polynomial []) _ = []
-monomialWithPosition (Polynomial (x:xs)) n = (x,n):monomialWithPosition (Polynomial xs) (n-1)
+monomialWithPosition (Polynomial (x:xs)) n = Point (x,n) : monomialWithPosition (Polynomial xs) (n-1)
 
 polynomialLength :: Polynomial -> Int
 polynomialLength (Polynomial p) = length p
@@ -36,33 +35,39 @@ evaluate :: Polynomial -> Int -> Int
 evaluate (Polynomial []) _ = 0
 evaluate (Polynomial (p:ps)) x = p + x * evaluate (Polynomial ps) x
 
--- Should be: format :: Point -> [Char]
-format :: (Int, Int) -> [Char]
-format (0, _) = ""
-format (1, 1) = "x"
-format (coefficient, 1) = show coefficient ++ "x"
-format (coefficient, 0) = show coefficient
-format (1, exponent) = "x^" ++ show exponent
-format (coefficient, exponent) = show coefficient ++ "x^" ++ show exponent
+format :: Point -> [Char]
+format (Point (0, _)) = ""
+format (Point (1, 1)) = "x"
+format (Point (coefficient, 1)) = show coefficient ++ "x"
+format (Point (coefficient, 0)) = show coefficient
+format (Point (1, exponent)) = "x^" ++ show exponent
+format (Point (coefficient, exponent)) = show coefficient ++ "x^" ++ show exponent
 
 stringulate :: [[Char]] -> [Char]
 stringulate = intercalate "" . intersperse " + "
 
--- singleTerm :: [Point] -> Int -> Int
--- singleTerm points i = where
---   let term = Polynomial [1]
---   let (Point (x, y)) = points !! i
-
---   x
+sigma :: Polynomial -> [Point] -> Int -> Int -> Int -> Int -> Polynomial
+sigma term points xi yi j i 
+  | length points == j = term
+  | j == i = sigma term points xi yi (j+1) i
+  | otherwise = let 
+    Point (xj, _) = points !! j
+      in sigma (multiply term (Polynomial [ -xj `div` (xi - xj), 1 `div` (xi - xj) ])) points xi yi (j+1) i 
 
 polynomials :: IO ()
 polynomials = do
   let p1 = Polynomial [1,2,3]
   let p2 = Polynomial [1,2,3]
   let p3 = add (Polynomial [1,2,3]) (Polynomial [1,2,3])
+
   print . stringulate . map format . monomialWithPosition p1 $ polynomialLength p1 - 1
   print . stringulate . map format . monomialWithPosition p2 $ polynomialLength p2 - 1
   print . stringulate . map format . monomialWithPosition (multiply p1 p2) $ polynomialLength (multiply p1 p2) - 1
+
+  let s = sigma (Polynomial [1]) [Point (1, 1)] 1 1 0 0
+  print . stringulate . map format . monomialWithPosition s $ polynomialLength s - 1
+  
+
 
 -- -- https://github.com/hashanp/haskell-projects/blob/master/Polynomial.hs
 -- -- http://hackage.haskell.org/package/dsp-0.2.1/docs/src/Polynomial-Basic.html
